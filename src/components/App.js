@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Card from './Item';
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -7,11 +8,21 @@ const Title = styled.h1`
   color: palevioletred;
 `;
 
+const Wrapper = styled.article`
+  display: flex;
+  justify-content: space-around;
+`;
+
 const App = () => {
   return (
-    <div>
+    <section>
       <Title>Test Shop</Title>
-    </div>
+      <Wrapper>
+        <Card title="VOUCHER" />
+        <Card title="TSHIRT" />
+        <Card title="MUG" />
+      </Wrapper>
+    </section>
   );
 };
 
