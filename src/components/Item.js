@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Cabify from '../images/cabify.png';
+import Logo from '../images/cabify.png';
 
 const Card = styled.div`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -40,11 +40,11 @@ const Item = props => {
   return (
     <Card>
       <Title>{props.title}</Title>
-      <Image src={Cabify} />
+      <Image src={Logo} />
       <Price>{props.price} €</Price>
       <Button
         onClick={() => {
-          props.addToCart(props.title, props.item, props.price);
+          props.addToCart(props.title, props.price);
         }}
       >
         Add to cart
