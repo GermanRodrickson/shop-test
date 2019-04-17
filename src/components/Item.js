@@ -6,7 +6,6 @@ import Cabify from '../images/cabify.png';
 const Card = styled.div`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   width: 30%;
-  height: 300px;
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -32,14 +31,20 @@ const Title = styled.h3`
   font-size: 22px;
 `;
 
+const Price = styled.p`
+  font-size: 18px;
+  text-align: center;
+`;
+
 const Item = props => {
   return (
     <Card>
       <Title>{props.title}</Title>
       <Image src={Cabify} />
+      <Price>{props.price} €</Price>
       <Button
         onClick={() => {
-          props.addToCart(props.title, props.item);
+          props.addToCart(props.title, props.item, props.price);
         }}
       >
         Add to cart
