@@ -10,7 +10,18 @@ const Card = styled.div`
 `;
 
 const Item = props => {
-  return <Card>{props.title}</Card>;
+  return (
+    <Card>
+      {props.title}
+      <button
+        onClick={() => {
+          props.addToCart(props.title, props.item);
+        }}
+      >
+        +
+      </button>
+    </Card>
+  );
 };
 
 export default Item;
