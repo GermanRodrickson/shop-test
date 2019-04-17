@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Card from './Item';
+import Cart from './Cart';
 
 const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
-  color: palevioletred;
+  color: #865bf3;
 `;
 
 const Wrapper = styled.article`
@@ -18,6 +19,7 @@ const App = () => {
   const [tshirt, setTshirt] = useState(0);
   const [mug, setMug] = useState(0);
   const [cart, setCart] = useState([]);
+  const [price, setprice] = useState(0);
 
   const addToCart = (title, item) => {
     if (title === 'VOUCHER') {
@@ -30,25 +32,19 @@ const App = () => {
       setMug(item + 1);
     }
 
-    setCart([...cart, item + title]);
+    setCart([...cart, title]);
   };
 
   return (
     <section>
       <Title>Test Shop</Title>
       <Wrapper>
-        <Card title="VOUCHER" item={voucher} addToCart={addToCart} />
-        <Card title="TSHIRT" item={tshirt} addToCart={addToCart} />
-        <Card title="MUG" item={mug} addToCart={addToCart} />
+        <Card title="VOUCHER" price={10} item={voucher} addToCart={addToCart} />
+        <Card title="TSHIRT" price={10} item={tshirt} addToCart={addToCart} />
+        <Card title="MUG" price={10} item={mug} addToCart={addToCart} />
       </Wrapper>
-      <div>MUG {mug}</div>
-      <div>VOUCHER {voucher}</div>
-      <div>TSHIRT {tshirt}</div>
-      <div>
-        {cart.map(x => (
-          <p>{x}</p>
-        ))}
-      </div>
+      <div>Items: {cart.join(', ')}</div>
+      <div>Total: </div>
     </section>
   );
 };
