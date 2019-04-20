@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Logo from '../images/cabify.png';
+// import Logo from '../images/cabify.png';
 
 const Card = styled.div`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -11,11 +11,11 @@ const Card = styled.div`
   padding: 10px;
 `;
 
-const Image = styled.img`
-  width: 100px;
-  display: block;
-  margin: 50px auto;
-`;
+// const Image = styled.img`
+//   width: 100px;
+//   display: block;
+//   margin: 50px auto;
+// `;
 
 const Button = styled.button`
   width: 40%;
@@ -40,7 +40,7 @@ const Item = props => {
   return (
     <Card>
       <Title>{props.title}</Title>
-      <Image src={Logo} />
+      {/* <Image src={Logo} /> */}
       <Price>{props.price} €</Price>
       <Button
         onClick={() => {
