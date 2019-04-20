@@ -21,9 +21,19 @@ const App = () => {
   const [avaliableItems] = useState(data);
 
   const addToCart = (title, price) => {
-    setCart([...cart, title]);
+    setCart([
+      ...cart,
+      {
+        title,
+        price
+      }
+    ]);
     setcheckOut(checkOut + price);
   };
+
+  // useEffect(() => {
+  //   console.log(cart);
+  // }, [cart]);
 
   return (
     <section>
@@ -40,7 +50,11 @@ const App = () => {
           );
         })}
       </Wrapper>
-      <div>Items: {cart.join(', ')}</div>
+      <span>Items: </span>
+      {cart.map(item => (
+        <span>{item.title} </span>
+      ))}
+
       <div>Total: {checkOut} €</div>
     </section>
   );
