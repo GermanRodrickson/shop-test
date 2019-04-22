@@ -39,6 +39,7 @@ const App = () => {
   useEffect(() => {
     const result = groupedItems.map(item => {
       let total = 0;
+
       if (item.promotion === '2x1') {
         const half = Math.ceil(item.times / 2);
         for (let i = 0; i < half; i++) {
@@ -48,10 +49,17 @@ const App = () => {
       }
 
       if (item.promotion === 'bulk-purchases' && item.times >= 3) {
-        return 19.0;
+        for (let i = 0; i < item.times; i++) {
+          total += 19;
+        }
+        return total;
       }
 
-      return item.price;
+      for (let i = 0; i < item.times; i++) {
+        total += item.price;
+      }
+
+      return total;
     });
 
     setcheckOut(result.reduce(sum, 0));
