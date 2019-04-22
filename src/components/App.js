@@ -41,29 +41,28 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    let foo = 0;
     const result = groupedItems.map(item => {
-      if (
-        item.promotion === '2x1' &&
-        item.times % 2 === 0 &&
-        item.times !== 0
-      ) {
-        return 0;
+      let total = 0;
+      if (item.promotion === '2x1') {
+        const half = Math.ceil(item.times / 2);
+        for (let i = 0; i < half; i++) {
+          total += item.price;
+        }
+        return total;
       }
 
       if (item.promotion === 'bulk-purchases' && item.times >= 3) {
-        return (item.price = 19.0);
+        return 19.0;
       }
 
       return item.price;
     });
 
-    for (let i = 0; i < result.length; i++) {
-      let element = result[i];
-      foo = element;
+    function add(accumulator, a) {
+      return accumulator + a;
     }
 
-    setcheckOut(checkOut + foo);
+    setcheckOut(result.reduce(add, 0));
   }, [cart]);
 
   return (
