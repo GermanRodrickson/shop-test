@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Card from './Item';
 import data from '../data.json';
+import { sum, groupByItem } from '../helpers/helper';
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -33,12 +34,7 @@ const App = () => {
     ]);
   };
 
-  const groupedItems = cart.reduce((acc, val) => {
-    let index = acc.findIndex(item => item.title === val.title);
-    return (
-      index === -1 ? acc.push({ times: 1, ...val }) : acc[index].times++, acc
-    );
-  }, []);
+  const groupedItems = groupByItem(cart);
 
   useEffect(() => {
     const result = groupedItems.map(item => {
@@ -58,11 +54,7 @@ const App = () => {
       return item.price;
     });
 
-    function add(accumulator, a) {
-      return accumulator + a;
-    }
-
-    setcheckOut(result.reduce(add, 0));
+    setcheckOut(result.reduce(sum, 0));
   }, [cart]);
 
   return (
