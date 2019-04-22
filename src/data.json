@@ -2,16 +2,19 @@
   {
     "title": "Voucher",
     "price": 5.0,
-    "id": 1
+    "id": 1,
+    "promotion": "2x1"
   },
   {
     "title": "Tshirt",
     "price": 20.0,
-    "id": 2
+    "id": 2,
+    "promotion": "bulk-purchases"
   },
   {
     "title": "Mug",
     "price": 7.5,
-    "id": 3
+    "id": 3,
+    "promotion": "none"
   }
 ]
