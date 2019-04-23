@@ -23,10 +23,10 @@ const Cart = props => {
   return (
     <Wrapper>
       <Checkout>
+        <span>Total: {props.checkout}€</span>
         <span role="img" aria-label="cart">
           🛒
         </span>
-        <span>Total: {props.checkout}€</span>
       </Checkout>
       {props.children}
     </Wrapper>

@@ -5,6 +5,7 @@ import Item from './Item';
 import Cart from './Cart';
 import CartItem from './CartItem';
 import data from '../data.json';
+import Menu from './Menu';
 import {
   sumTotal,
   groupByItem,
@@ -37,6 +38,28 @@ const App = () => {
   const [checkOut, setcheckOut] = useState(0);
   const [avaliableItems] = useState(data);
 
+  let [menuOpen, setmenuOpen] = useState(false);
+  const groupedItems = groupByItem(cart);
+
+  const openCart = () => setmenuOpen(true);
+
+  menuOpen
+    ? (menuOpen = (
+        <WrapperItems>
+          <Cart openCart={openCart} checkout={checkOut}>
+            {groupedItems.map((item, id) => (
+              <CartItem
+                key={id}
+                times={item.times}
+                title={item.title}
+                price={item.price}
+              />
+            ))}
+          </Cart>
+        </WrapperItems>
+      ))
+    : (menuOpen = <Menu itemsCart={cart.length} openCart={openCart} />);
+
   const addToCart = (title, price, promotion) => {
     setCart([
       ...cart,
@@ -47,8 +70,6 @@ const App = () => {
       }
     ]);
   };
-
-  const groupedItems = groupByItem(cart);
 
   const result = groupedItems.map(item => {
     let total = 0;
@@ -84,19 +105,7 @@ const App = () => {
           );
         })}
       </Wrapper>
-
-      <WrapperItems>
-        <Cart checkout={checkOut}>
-          {groupedItems.map((item, id) => (
-            <CartItem
-              key={id}
-              times={item.times}
-              title={item.title}
-              price={item.price}
-            />
-          ))}
-        </Cart>
-      </WrapperItems>
+      {menuOpen}
     </section>
   );
 };

@@ -1,5 +1,6 @@
 import { MAX_TO_GET_DISCOUNT } from '../constants';
 
+// stack overflow
 export const groupByItem = arr => {
   return arr.reduce((acc, val) => {
     const index = acc.findIndex(item => item.title === val.title);
