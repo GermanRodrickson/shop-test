@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import Card from './Item';
+import Item from './Item';
+import Cart from './Cart';
+import CartItem from './CartItem';
 import data from '../data.json';
-import { sum, groupByItem } from '../helpers/helper';
+import {
+  sumTotal,
+  groupByItem,
+  addItems,
+  hasBulkPromotion,
+  hasBOGOF
+} from '../helpers';
+import { DISCOUNT_BULK_PURCHASE } from '../constants';
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -14,6 +23,11 @@ const Title = styled.h1`
 const Wrapper = styled.article`
   display: flex;
   justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const WrapperItems = styled.article`
   max-width: 1200px;
   margin: 0 auto;
 `;
@@ -36,34 +50,23 @@ const App = () => {
 
   const groupedItems = groupByItem(cart);
 
-  useEffect(() => {
-    const result = groupedItems.map(item => {
-      let total = 0;
+  const result = groupedItems.map(item => {
+    let total = 0;
+    const { price, promotion, times } = item;
 
-      if (item.promotion === '2x1') {
-        const half = Math.ceil(item.times / 2);
-        for (let i = 0; i < half; i++) {
-          total += item.price;
-        }
-        return total;
-      }
+    if (hasBOGOF(promotion)) {
+      const half = Math.ceil(times / 2);
+      return addItems(half, price, total);
+    }
 
-      if (item.promotion === 'bulk-purchases' && item.times >= 3) {
-        for (let i = 0; i < item.times; i++) {
-          total += 19;
-        }
-        return total;
-      }
+    if (hasBulkPromotion(promotion, times)) {
+      return addItems(times, DISCOUNT_BULK_PURCHASE, total);
+    }
 
-      for (let i = 0; i < item.times; i++) {
-        total += item.price;
-      }
+    return times * price + total;
+  });
 
-      return total;
-    });
-
-    setcheckOut(result.reduce(sum, 0));
-  }, [cart]);
+  useEffect(() => setcheckOut(result.reduce(sumTotal, 0)), [cart]);
 
   return (
     <section>
@@ -71,7 +74,7 @@ const App = () => {
       <Wrapper>
         {avaliableItems.map(item => {
           return (
-            <Card
+            <Item
               title={item.title}
               price={item.price}
               promotion={item.promotion}
@@ -81,12 +84,19 @@ const App = () => {
           );
         })}
       </Wrapper>
-      <span>Items: </span>
-      {cart.map((item, id) => (
-        <span key={id}>{item.title} </span>
-      ))}
 
-      <div>Total: {checkOut} €</div>
+      <WrapperItems>
+        <Cart checkout={checkOut}>
+          {groupedItems.map((item, id) => (
+            <CartItem
+              key={id}
+              times={item.times}
+              title={item.title}
+              price={item.price}
+            />
+          ))}
+        </Cart>
+      </WrapperItems>
     </section>
   );
 };
